@@ -9,12 +9,12 @@ public class DefaultSensitiveWordsDetector implements SensitiveWordsDetector {
 	
 	private final Map<Character, Object> wordsTree;
 	private final int minWordLen;
-	private final Set<Character> ignorableChars;
+	private final CharacterSet ignorableChars;
 
 	public DefaultSensitiveWordsDetector(Map<Character, Object> wordsTree, int minWordLen, Set<Character> ignorableChars) {
 		this.wordsTree = wordsTree;
 		this.minWordLen = minWordLen;
-		this.ignorableChars = ignorableChars;
+		this.ignorableChars = ignorableChars == null ? null : new CharacterSet(ignorableChars);
 	}
 
 	@SuppressWarnings("unchecked")
