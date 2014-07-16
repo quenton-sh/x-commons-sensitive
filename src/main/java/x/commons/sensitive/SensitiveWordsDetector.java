@@ -3,10 +3,10 @@ package x.commons.sensitive;
 public interface SensitiveWordsDetector {
 
 	/**
-	 * 检查给定文本中是否包含敏感词 
+	 * 检测给定文本中的敏感词 
 	 * @param text
-	 * @return true 包含敏感词；false 不包含敏感词
+	 * @return 包含的敏感词或null
 	 */
-	public boolean containsSensitiveWords(String text);
+	public String detectSensitiveWords(String text);
 	
 }

@@ -17,16 +17,16 @@ public class DefaultSensitiveWordsDetectorFactoryTest {
 		DefaultSensitiveWordsDetectorFactory sug = new DefaultSensitiveWordsDetectorFactory();
 		SensitiveWordsDetector det = sug.getSensitiveWordsDetector(in, "UTF-8", null);
 		
-		boolean ret = det.containsSensitiveWords("包含敏感词1xx吗");
-		assertTrue(ret);
+		String ret = det.detectSensitiveWords("包含敏感词1xx吗");
+		assertEquals("敏感词1xx", ret);
 		
-		ret = det.containsSensitiveWords("包含敏感词1吗");
-		assertTrue(!ret);
+		ret = det.detectSensitiveWords("包含敏感词1吗");
+		assertTrue(ret == null);
 		
-		ret = det.containsSensitiveWords("出售枪支弹药");
-		assertTrue(ret);
+		ret = det.detectSensitiveWords("出售枪支弹药");
+		assertEquals("枪支弹药", ret);
 		
-		ret = det.containsSensitiveWords("防弹衣专卖");
-		assertTrue(ret);
+		ret = det.detectSensitiveWords("这里防弹衣专卖");
+		assertEquals("防弹衣", ret);
 	}
 }

@@ -43,42 +43,42 @@ public class DefaultSensitiveWordsDetectorTest {
 	@Test
 	public void test() {
 		// very short
-		boolean ret = sug.containsSensitiveWords("单");
-		assertTrue(!ret);
+		String ret = sug.detectSensitiveWords("单");
+		assertTrue(ret == null);
 		
-		ret = sug.containsSensitiveWords(null);
-		assertTrue(!ret);
+		ret = sug.detectSensitiveWords(null);
+		assertTrue(ret == null);
 		
 		// prefix
-		ret = sug.containsSensitiveWords("acdfxxxyyy");
-		assertTrue(ret);
+		ret = sug.detectSensitiveWords("acdfxxxyyy");
+		assertEquals("acdf", ret);
 		
 		// middle
-		ret = sug.containsSensitiveWords("哈哈abcde啊啊");
-		assertTrue(ret);
+		ret = sug.detectSensitiveWords("哈哈abcde啊啊");
+		assertEquals("abcde", ret);
 		
 		// suffix
-		ret = sug.containsSensitiveWords("哈哈cg");
-		assertTrue(ret);
+		ret = sug.detectSensitiveWords("哈哈cg");
+		assertEquals("cg", ret);
 		
 		// other cases:
-		ret = sug.containsSensitiveWords("哈哈bcf啊啊");
-		assertTrue(ret);
+		ret = sug.detectSensitiveWords("哈哈bcf啊啊");
+		assertEquals("bcf", ret);
 		
-		ret = sug.containsSensitiveWords("哈哈bcg啊啊");
-		assertTrue(ret);
+		ret = sug.detectSensitiveWords("哈哈bcg啊啊");
+		assertEquals("bcg", ret);
 		
-		ret = sug.containsSensitiveWords("哈哈bc啊啊");
-		assertTrue(!ret);
+		ret = sug.detectSensitiveWords("哈哈bc啊啊");
+		assertTrue(ret == null);
 		
-		ret = sug.containsSensitiveWords("哈哈bch啊啊");
-		assertTrue(!ret);
+		ret = sug.detectSensitiveWords("哈哈bch啊啊");
+		assertTrue(ret == null);
 		
 		// ignorable chars
-		ret = sug.containsSensitiveWords(" b$c#");
-		assertTrue(!ret);
+		ret = sug.detectSensitiveWords(" b$c#");
+		assertTrue(ret == null);
 		
-		ret = sug.containsSensitiveWords(" b$c# g");
-		assertTrue(ret);
+		ret = sug.detectSensitiveWords(" b$c# g");
+		assertEquals("bcg", ret);
 	}
 }
