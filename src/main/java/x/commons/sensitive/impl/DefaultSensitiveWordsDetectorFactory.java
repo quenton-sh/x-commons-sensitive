@@ -15,15 +15,18 @@ import x.commons.sensitive.SensitiveWordsDetectorFactory;
 public class DefaultSensitiveWordsDetectorFactory implements SensitiveWordsDetectorFactory {
 
 	@Override
-	public SensitiveWordsDetector getSensitiveWordsDetector(Set<String> sensitiveWords, Set<Character> ignorableChars) {
+	public SensitiveWordsDetector getSensitiveWordsDetector(Set<String> sensitiveWords, Set<String> ignorableWords, Set<Character> ignorableChars) {
+		if (ignorableWords != null) {
+			sensitiveWords.removeAll(ignorableWords);
+		}
 		return this.buildDefaultSensitiveWordsDetector(sensitiveWords, ignorableChars);
 	}
 
 	@Override
-	public SensitiveWordsDetector getSensitiveWordsDetector(InputStream in, String encoding, Set<Character> ignorableChars)
+	public SensitiveWordsDetector getSensitiveWordsDetector(InputStream in, String encoding, Set<String> ignorableWords, Set<Character> ignorableChars)
 			throws IOException {
 		Set<String> sensitiveWords = this.readLines(in, encoding);
-		return this.buildDefaultSensitiveWordsDetector(sensitiveWords, ignorableChars);
+		return this.getSensitiveWordsDetector(sensitiveWords, ignorableWords, ignorableChars);
 	}
 	
 	private Set<String> readLines(InputStream in, String encoding) throws IOException {
@@ -34,7 +37,7 @@ public class DefaultSensitiveWordsDetectorFactory implements SensitiveWordsDetec
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				line = line.trim();
-				if (line.length() == 0) {
+				if (line.length() == 0 || line.startsWith("#")) {
 					continue;
 				}
 				set.add(line);

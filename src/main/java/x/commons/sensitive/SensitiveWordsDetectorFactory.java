@@ -7,8 +7,8 @@ import java.util.Set;
 public interface SensitiveWordsDetectorFactory {
 
 	public SensitiveWordsDetector getSensitiveWordsDetector(
-			Set<String> sensitiveWords, Set<Character> ignorableChars);
+			Set<String> sensitiveWords, Set<String> ignorableWords, Set<Character> ignorableChars);
 
 	public SensitiveWordsDetector getSensitiveWordsDetector(InputStream in,
-			String encoding, Set<Character> ignorableChars) throws IOException;
+			String encoding, Set<String> ignorableWords, Set<Character> ignorableChars) throws IOException;
 }
